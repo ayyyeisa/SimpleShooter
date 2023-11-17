@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
         {
             print("Paddle Should Be Moving");
             moveVector = ship.velocity = new Vector2(rotDirection, moveSpeed * moveDirection);
-            Debug.Log("movevector is x: " + moveVector.x + " and y: " + moveVector.y);
         }
         else
         {
