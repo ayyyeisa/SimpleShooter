@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,18 +24,43 @@ public class PlayerController : MonoBehaviour
     private InputAction quit;
 
     private bool playerIsMoving;
+    private bool playerIsRotating;
+    [SerializeField] private Rigidbody2D ship;
+
+    [SerializeField] private float revSpeed;
+    [SerializeField] private float moveSpeed;
+    private int revDirection; //1 indicates clockwise direction. -1 indicates counterclockwise
+    private float moveDirection;
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        ship = GetComponent<Rigidbody2D>();
         EnableInputs();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerIsMoving)
+        {
+            moveDirection = move.ReadValue<float>();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (playerIsMoving)
+        {
+            print("Paddle Should Be Moving");
+            ship.velocity = new Vector2(0, moveSpeed * moveDirection);
+        }
+        else
+        {
+            print("Paddle Should Not Be Moving");
+            ship.velocity = Vector2.zero;
+        }
     }
 
     #region Input Actions
