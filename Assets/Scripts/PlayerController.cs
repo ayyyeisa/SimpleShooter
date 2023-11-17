@@ -23,40 +23,18 @@ public class PlayerController : MonoBehaviour
     private InputAction quit;
 
     private bool playerIsMoving;
-    private bool playerIsRotating;
-    [SerializeField] private Rigidbody2D ship;
-    //private Vector2 movementInput;
-
-    [SerializeField] private float revSpeed;
-    private int revDirection; //1 indicates clockwise direction. -1 indicates counterclockwise
-    private float moveDirection;
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        ship = GetComponent<Rigidbody2D>();
- 
         EnableInputs();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerIsMoving)
-        {
-            moveDirection = move.ReadValue<float>();
-        }
-    }
-
-    private void FixedUpdate()
-    {
-       // ship.velocity = movementInput;
-    }
-
-    private void OnMove(InputValue inputValue)
-    {
-       // movementInput = inputValue.Get<Vector2>();
+        
     }
 
     #region Input Actions
@@ -80,25 +58,30 @@ public class PlayerController : MonoBehaviour
 
     private void Move_started(InputAction.CallbackContext obj)
     {
+        Debug.Log("sprite should be moving");
         playerIsMoving = true;
     }
 
     private void Move_canceled(InputAction.CallbackContext obj)
     {
+        Debug.Log("sprite should no longer be moving");
         playerIsMoving= false;
     }
 
     private void Rotate_started(InputAction.CallbackContext obj)
     {
-        playerIsRotating = true;
+        Debug.Log("sprite should be rotating");
+        playerIsMoving = true;
     }
 
     private void Rotate_canceled(InputAction.CallbackContext obj)
     {
-        playerIsRotating = false;
+        Debug.Log("sprite should've stopped rotating");
+        playerIsMoving = false;
     }
     private void Restart_started(InputAction.CallbackContext obj)
     {
+        Debug.Log("scene shouldve been reloaded");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
