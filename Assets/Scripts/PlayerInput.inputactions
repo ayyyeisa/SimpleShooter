@@ -3,21 +3,12 @@
     "maps": [
         {
             "name": "Game",
-            "id": "d28a1f13-b32e-48b9-9362-4aa13dc60fb3",
+            "id": "898eabf7-a17d-446b-b895-193414d71fea",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "Quit",
                     "type": "Button",
-                    "id": "af13717d-4e42-47b2-8a17-63192e545cac",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Rotate",
-                    "type": "Button",
-                    "id": "c7405f53-710f-464c-925a-5436a4fcc6e9",
+                    "id": "c12faa51-ab2a-4445-bde8-5a16919b75fa",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -26,16 +17,34 @@
                 {
                     "name": "Restart",
                     "type": "Button",
-                    "id": "fa4a4b16-c067-4ce8-a47a-801cbe424b4b",
+                    "id": "d54bc73c-8067-4ba2-9e6e-8f4500c582c7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Quit",
+                    "name": "Move",
                     "type": "Button",
-                    "id": "10714904-5fea-4f40-9f96-4fa5998f42bf",
+                    "id": "32314b0f-8dbe-4edf-9a65-58fc09209b51",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "b588cad8-ca19-458c-9509-64c49d421281",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "360da543-ce98-46e5-aa03-1aa83d24c2c2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -44,9 +53,31 @@
             ],
             "bindings": [
                 {
-                    "name": "MoveWASD",
-                    "id": "97c744da-9497-4e02-b07a-cd11fc165a39",
-                    "path": "1DAxis(whichSideWins=1)",
+                    "name": "",
+                    "id": "d3406588-e744-4b57-b77c-fc97a362a45e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "049c9d7d-0b9e-4ebb-bd3d-b1dbea1ab4bc",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "WASD",
+                    "id": "655a2c01-8949-4cec-a661-b1a165378df0",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -56,7 +87,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "8d5be77a-ebbf-487b-b4ad-d238caf410f2",
+                    "id": "c61c3e0d-aa9a-4dbd-91f3-248234c5078e",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -67,7 +98,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "649c8ec2-3446-4bc1-b7bd-3991d1f72173",
+                    "id": "9a1f7868-ffb3-46b1-940e-20efed0517d4",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -77,42 +108,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "MoveArrows",
-                    "id": "eb9a8101-d9cf-417b-9026-cb6a048ce953",
+                    "name": "WASD",
+                    "id": "3ad2a9f5-f07f-492d-9e29-b6d412b340f7",
                     "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "1708b292-d2a1-461b-9c2c-cbe690fb4544",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "b678361b-5755-4e96-a264-4f23b60446ea",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "RotateWASD",
-                    "id": "3d935207-9819-477f-961d-e40c3f0f7851",
-                    "path": "1DAxis(whichSideWins=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -122,7 +120,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "d2d8397b-e2c3-451e-a193-329c89b49896",
+                    "id": "76f876b3-dac2-4eac-b317-91618bd5356b",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -133,7 +131,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "30d84932-21f8-44e3-8e41-37cfc8994da7",
+                    "id": "42de63fb-4640-49fc-89fd-ef9041b1b791",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -143,57 +141,13 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "RotateArrows",
-                    "id": "4c9c7ded-fea3-4160-8bfe-b81ffe50c853",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "5ff17f24-5629-42be-9107-a6a3a04a7d1b",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "24f4adbc-43ad-4754-aa98-e9ed35590c9d",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
-                    "id": "226145ae-c0c5-43ac-9439-45a112ed408f",
-                    "path": "<Keyboard>/r",
+                    "id": "0557f074-311f-4c84-8c43-f2830a604174",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Restart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "04878905-49c4-4daf-9358-2570993df494",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Quit",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

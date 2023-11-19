@@ -9,6 +9,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInput playerInput;
     private InputAction move;
     private InputAction rotate;
+    private InputAction fire;
     private InputAction restart;
     private InputAction quit;
+
+    public bool gameIsRunning;
+    public bool spaceWasPressed;
 
     private bool playerIsMoving;
     private bool playerIsRotating;
@@ -30,60 +35,60 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float rotSpeed;
     [SerializeField] private float moveSpeed;
-    private int rotDirection; //1 indicates clockwise direction. -1 indicates counterclockwise
+    private float rotDirection; 
     private float moveDirection;
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        gameIsRunning = false;
+        spaceWasPressed = false;
         ship = GetComponent<Rigidbody2D>();
-        rotDirection = 0;
         EnableInputs();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerIsMoving)
-        {
-            moveDirection = move.ReadValue<float>();
-        }
+        GetDirections();
     }
 
     private void FixedUpdate()
     {
-        PlayerMovement();
-        PlayerRotation();
+        if(gameIsRunning)
+        {
+            PlayerMovement();
+            PlayerRotation();
+        }
+        
     }
 
+    private void GetDirections()
+    {
+        if (playerIsMoving)
+        {
+            moveDirection = move.ReadValue<float>();
+        }
+        if (playerIsRotating)
+        {
+            //1 indicates clockwise direction. -1 indicates counterclockwise
+            rotDirection = rotate.ReadValue<float>();
+        }
+    }
     private void PlayerMovement()
     {
         if (playerIsMoving)
         {
-            print("Paddle Should Be Moving");
-            moveVector = ship.velocity = new Vector2(rotDirection, moveSpeed * moveDirection);
-        }
-        else
-        {
-            print("Paddle Should Not Be Moving");
-            ship.velocity = Vector2.zero;
+            ship.transform.position += transform.up * Time.deltaTime * moveSpeed * moveDirection;
         }
     }
 
     private void PlayerRotation()
     {
-        Debug.Log("reached rotation function");
         if (playerIsRotating)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(transform.forward, moveVector);
-            Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
-            ship.MoveRotation(rotation);
-            Debug.Log("player should have rotated");
-        }
-        else
-        {
-
+            ship.transform.Rotate(new Vector3(0, 0, -rotDirection * rotSpeed));
         }
     }
 
@@ -94,6 +99,7 @@ public class PlayerController : MonoBehaviour
 
         move = playerInput.currentActionMap.FindAction("Move");
         rotate = playerInput.currentActionMap.FindAction("Rotate");
+        fire = playerInput.currentActionMap.FindAction("Fire");
         restart = playerInput.currentActionMap.FindAction("Restart");
         quit = playerInput.currentActionMap.FindAction("Quit");
 
@@ -101,6 +107,7 @@ public class PlayerController : MonoBehaviour
         move.canceled += Move_canceled;
         rotate.started += Rotate_started;
         rotate.canceled += Rotate_canceled;
+        fire.started += Fire_started;
         restart.started += Restart_started;
         quit.started += Quit_started;
 
@@ -118,14 +125,20 @@ public class PlayerController : MonoBehaviour
 
     private void Rotate_started(InputAction.CallbackContext obj)
     {
-        Debug.Log("sprite should be rotating");
         playerIsRotating = true;
     }
 
     private void Rotate_canceled(InputAction.CallbackContext obj)
     {
-        Debug.Log("sprite should've stopped rotating");
         playerIsRotating = false;
+    }
+    private void Fire_started(InputAction.CallbackContext obj)
+    {
+        if(!spaceWasPressed)
+        {
+            //might need to comment this out bc meteor controller is also running the game
+            spaceWasPressed = true;
+        }
     }
     private void Restart_started(InputAction.CallbackContext obj)
     {
@@ -146,6 +159,7 @@ public class PlayerController : MonoBehaviour
         move.canceled -= Move_canceled;
         rotate.started -= Rotate_started;
         rotate.canceled -= Rotate_canceled;
+        fire.started -= Fire_started;
         restart.started -= Restart_started;
         quit.started -= Quit_started;
     }
