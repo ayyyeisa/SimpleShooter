@@ -27,4 +27,17 @@ public class BulletController : MonoBehaviour
 
         Destroy(this.gameObject, this.maxLifetime);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "Meteor")
+        {
+            Destroy(gameObject);
+            //add points here
+        }
+        else if(collision.transform.tag == "Boundary")
+        {
+            Destroy(gameObject);
+        }
+    }
 }

@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 212198165}
   m_Layer: 3
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Boundary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -639,9 +639,9 @@ GameObject:
   - component: {fileID: 288475865}
   - component: {fileID: 288475867}
   - component: {fileID: 288475868}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -736,7 +736,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &288475867
 SpriteRenderer:
   m_ObjectHideFlags: 0

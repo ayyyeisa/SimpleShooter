@@ -45,4 +45,33 @@ public class MeteorController : MonoBehaviour
 
         Destroy(this.gameObject, this.maxLifetime);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.transform.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+        else if(collision.transform.tag == "Bullet")
+        {
+            if((this.size * 0.5f) >= this.minSize)
+            {
+                CreateSplit();
+                CreateSplit();
+            }
+
+            Destroy(gameObject);
+        }
+    }
+
+    private void CreateSplit()
+    {
+        Vector2 positionOffset = this.transform.position;
+        positionOffset += Random.insideUnitCircle * 0.5f;
+
+        MeteorController half = Instantiate(this, positionOffset, this.transform.rotation);
+        half.size = this.size * 0.5f;
+
+        half.SetTrajectory(Random.insideUnitCircle.normalized);
+    }
 }

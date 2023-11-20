@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boundary
+  - Bullet
+  - Meteor
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - UI
   - Meteor
   - Camera
-  - 
-  - 
+  - Bullet
+  - Player
   - 
   - 
   - 

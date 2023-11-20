@@ -99,6 +99,16 @@ public class PlayerController : MonoBehaviour
         bullet.Project(this.transform.up);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
+        if(collision.transform.tag == "Meteor")
+        {
+            //ensures that player ship isn't moved during collision
+            ship.velocity = Vector2.zero;
+            //lose a life
+        }
+    }
+
     #region Input Actions
     private void EnableInputs()
     {
