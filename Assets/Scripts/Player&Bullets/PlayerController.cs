@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     #region Variables
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] BulletController bulletPrefab;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] AudioManager audioManager;
+
     private InputAction move;
     private InputAction rotate;
     private InputAction fire;
@@ -40,12 +43,12 @@ public class PlayerController : MonoBehaviour
     private float rotDirection; 
     private float moveDirection;
 
-    [SerializeField] GameManager gameManager;
-
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         gameIsRunning = false;
         spaceWasPressed = false;
         ship = GetComponent<Rigidbody2D>();
@@ -100,13 +103,14 @@ public class PlayerController : MonoBehaviour
     {
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.Project(this.transform.up);
+        audioManager.PlaySFX(audioManager.BulletFired);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) 
     {
         if(collision.transform.tag == "Meteor")
         {
-            print("collision with meteor");
+            audioManager.PlaySFX(audioManager.PlayerHit);
             //ensures that player ship isn't moved during collision
             ship.velocity = Vector2.zero;
             //lose a life

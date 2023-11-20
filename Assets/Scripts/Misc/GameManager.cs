@@ -13,6 +13,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerController player;
+    [SerializeField] private AudioManager audioManager;
 
     public GameObject startScreen;
     [SerializeField] private GameObject loseScreen;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         startScreen.SetActive(true);
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
@@ -34,12 +37,13 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        print("player died is called");
         lives--;
         livesText.text = "Lives: " + lives;
         
         if(lives == 0)
         {
+            audioManager.PlaySFX(audioManager.GameOver);
+
             endScoreText.text = "Score: " + score;
             loseScreen.SetActive(true);
             inGameText.SetActive(false);
