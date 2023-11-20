@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 {
     #region Variables
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] BulletController bulletPrefab;
     private InputAction move;
     private InputAction rotate;
     private InputAction fire;
@@ -92,6 +93,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Fire()
+    {
+        BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
+        bullet.Project(this.transform.up);
+    }
+
     #region Input Actions
     private void EnableInputs()
     {
@@ -136,8 +143,12 @@ public class PlayerController : MonoBehaviour
     {
         if(!spaceWasPressed)
         {
-            //might need to comment this out bc meteor controller is also running the game
             spaceWasPressed = true;
+            gameIsRunning = true;
+        }
+        else
+        {
+            Fire();
         }
     }
     private void Restart_started(InputAction.CallbackContext obj)
