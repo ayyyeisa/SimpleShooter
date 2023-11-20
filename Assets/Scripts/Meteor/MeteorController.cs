@@ -54,6 +54,8 @@ public class MeteorController : MonoBehaviour
         }
         else if(collision.transform.tag == "Bullet")
         {
+            GameManager GM = FindObjectOfType<GameManager>();
+            GM.UpdateScore(this);
             if((this.size * 0.5f) >= this.minSize)
             {
                 CreateSplit();

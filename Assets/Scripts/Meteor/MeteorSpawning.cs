@@ -30,13 +30,16 @@ public class MeteorSpawning : MonoBehaviour
         if(playerInstance.gameIsRunning)
         {   
             //spawns a meteor object every three seconds
-            //InvokeRepeating(nameof(Spawn), this.spawnRate, this.spawnRate);
 
             if(MeteorRef == null)
             {
                 MeteorRef = StartCoroutine(StartMeteorSpawns());
             }
 
+        }
+        if((!playerInstance.gameIsRunning) && (playerInstance.spaceWasPressed))
+        {
+            StopCoroutine(StartMeteorSpawns());
         }
     }
 

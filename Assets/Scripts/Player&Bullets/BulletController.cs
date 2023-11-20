@@ -33,7 +33,6 @@ public class BulletController : MonoBehaviour
         if(collision.transform.tag == "Meteor")
         {
             Destroy(gameObject);
-            //add points here
         }
         else if(collision.transform.tag == "Boundary")
         {

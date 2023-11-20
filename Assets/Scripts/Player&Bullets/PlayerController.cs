@@ -9,11 +9,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     private float rotDirection; 
     private float moveDirection;
+
+    [SerializeField] GameManager gameManager;
 
     #endregion
     // Start is called before the first frame update
@@ -103,9 +106,11 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.transform.tag == "Meteor")
         {
+            print("collision with meteor");
             //ensures that player ship isn't moved during collision
             ship.velocity = Vector2.zero;
             //lose a life
+            gameManager.PlayerDied();
         }
     }
 
@@ -151,10 +156,13 @@ public class PlayerController : MonoBehaviour
     }
     private void Fire_started(InputAction.CallbackContext obj)
     {
+        //starts game if game hasn't already started
         if(!spaceWasPressed)
         {
             spaceWasPressed = true;
             gameIsRunning = true;
+            gameManager.startScreen.SetActive(false);
+            gameManager.inGameText.SetActive(true);
         }
         else
         {
