@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] BulletController bulletPrefab;
     [SerializeField] GameManager gameManager;
     [SerializeField] AudioManager audioManager;
+    [SerializeField] private Animator playerAnimator;
+
 
     private InputAction move;
     private InputAction rotate;
@@ -35,9 +37,9 @@ public class PlayerController : MonoBehaviour
 
     private bool playerIsMoving;
     private bool playerIsRotating;
-    [SerializeField] private Rigidbody2D ship;
     private Vector2 moveVector;
 
+    [SerializeField] private Rigidbody2D ship;
     [SerializeField] private float rotSpeed;
     [SerializeField] private float moveSpeed;
     private float rotDirection; 
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        playerAnimator = GetComponent<Animator>();
 
         gameIsRunning = false;
         spaceWasPressed = false;
@@ -87,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerIsMoving)
         {
+
             ship.transform.position += transform.up * Time.deltaTime * moveSpeed * moveDirection;
         }
     }
