@@ -9,7 +9,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,10 +41,15 @@ public class PlayerController : MonoBehaviour
     //whether player is using s/d or left/right arrow keys
     private bool playerIsRotating;
 
-    [Tooltip("")]
+    [Header("Variables relating to player ship")]
+    [Tooltip("References player's ship")]
     [SerializeField] private Rigidbody2D ship;
+    [Tooltip("speed of rotation")]
     [SerializeField] private float rotSpeed;
+    [Tooltip("Speed of forward/backward movement")]
     [SerializeField] private float moveSpeed;
+
+    //which direction the player is trying to move and rotate.
     private float rotDirection; 
     private float moveDirection;
 
@@ -53,22 +57,30 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //defines the audiomanager and player ship objects
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        ship = GetComponent<Rigidbody2D>();
 
+        //sets all boolean to false so game isn't running
         gameIsRunning = false;
         spaceWasPressed = false;
-        ship = GetComponent<Rigidbody2D>();
+        playerIsMoving = false;
+        playerIsRotating = false;
+        
+        //enables action map
         EnableInputs();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //reads directions of player input
         GetDirections();
     }
 
     private void FixedUpdate()
     {
+        //calls on player movement functions only if game is running
         if(gameIsRunning)
         {
             PlayerMovement();
@@ -77,10 +89,14 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// This reads the value returned from the player input based on the actionmap
+    /// </summary>
     private void GetDirections()
     {
         if (playerIsMoving)
         {
+            //1 indicates forward. -1 indicates backwards
             moveDirection = move.ReadValue<float>();
         }
         if (playerIsRotating)
@@ -89,6 +105,11 @@ public class PlayerController : MonoBehaviour
             rotDirection = rotate.ReadValue<float>();
         }
     }
+
+    /// <summary>
+    /// When called and playerIsMoving is set to true, the ship moves in the direction and speed for as long
+    /// as the player is holding the designated buttons (w/s or up/down arrows)
+    /// </summary>
     private void PlayerMovement()
     {
         if (playerIsMoving)
@@ -97,6 +118,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When called and playerIsRotating is set to false, the ship moves in the direction and speed for as long
+    /// as the player is holding the designated buttons (a/d or left/right arrows)
+    /// </summary>
     private void PlayerRotation()
     {
         if (playerIsRotating)
@@ -105,6 +130,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When called, a bullet prefab is made by calling on the bullet controller script. The prefab is instantiated
+    /// at the same position as the player and the bullet is projected forward. An audio clip is also played.
+    /// </summary>
     private void Fire()
     {
         BulletController bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
@@ -112,10 +141,16 @@ public class PlayerController : MonoBehaviour
         audioManager.PlaySFX(audioManager.BulletFired);
     }
 
+    /// <summary>
+    /// Handles collisions between the player and other objects. Ensures that player loses a life
+    /// when hit by a meteor.
+    /// </summary>
+    /// <param name="collision">Collision between player and other object<param>
     private void OnCollisionEnter2D(Collision2D collision) 
     {
         if(collision.transform.tag == "Meteor")
         {
+            //plays an audio clip when hit by a meteor
             audioManager.PlaySFX(audioManager.PlayerHit);
             //ensures that player ship isn't moved during collision
             ship.velocity = Vector2.zero;
@@ -125,6 +160,10 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Input Actions
+
+    /// <summary>
+    /// Sets all the player inputs
+    /// </summary>
     private void EnableInputs()
     {
         playerInput.currentActionMap.Enable();
@@ -174,6 +213,7 @@ public class PlayerController : MonoBehaviour
             gameManager.startScreen.SetActive(false);
             gameManager.inGameText.SetActive(true);
         }
+        //calls on fire if game is already running
         else
         {
             Fire();

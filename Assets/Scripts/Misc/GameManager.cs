@@ -12,29 +12,46 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Object references for scripts")]
     [SerializeField] private PlayerController player;
     [SerializeField] private AudioManager audioManager;
 
+    [Header("Screens and Texts")]
+    [Tooltip("Game instructions that appear before game starts")]
     public GameObject startScreen;
+    [Tooltip("Endscore and instructions to restart the game appear")]
     [SerializeField] private GameObject loseScreen;
     [SerializeField] private TMP_Text endScoreText;
+    [Tooltip("Key instructions to refer throughout game")]
     [SerializeField] private TMP_Text instructionsText;
+    [Tooltip("Player's current score")]
     [SerializeField] private TMP_Text scoreText;
+    [Tooltip("How many lives player has left")]
     [SerializeField] private TMP_Text livesText;
-
+    [Tooltip("Game object that has children that should be active during gameplay")]
     public GameObject inGameText;
+
+    //number of times player can be hit before game over
     private int lives = 3;
+    //score of the player
     private int score = 0;
 
     private void Start()
     {
+        //sets audiomanager
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
+        //sets screen to active
         startScreen.SetActive(true);
         livesText.text = "Lives: " + lives;
         scoreText.text = "Score: " + score;
     }
 
+    /// <summary>
+    /// When called, this decreases the number of lives the player has and displays it.
+    /// If player reaches 0 lives, then the gameOver audio clip is played and playerinput stops
+    /// Lose screen is also called to give instructions.
+    /// </summary>
     public void PlayerDied()
     {
         lives--;
@@ -51,6 +68,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When called, the player's score is updated based on the size of the meteor their bullet hits.
+    /// The score is not only updated, but displayed as well.
+    /// </summary>
+    /// <param name="meteor">the meteor that the bullet hit</param>
     public void UpdateScore(MeteorController meteor)
     {
         //updates score based on size of meteor

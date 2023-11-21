@@ -12,5 +12,6 @@ using UnityEngine;
 
 public static class Globals
 {
+    [Tooltip("Game object's bounds")]
     public static Bounds GameBounds;
 }

@@ -32,6 +32,10 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
+    /// <summary>
+    /// Plays the specific clip included in parameter once for every time it is called
+    /// </summary>
+    /// <param name="clip">name of audioclip that must be played</param>
     public void PlaySFX(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
