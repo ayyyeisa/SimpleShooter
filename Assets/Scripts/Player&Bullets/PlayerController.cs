@@ -19,26 +19,30 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+    [Header("---------- References to Game Objects -------------")]
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] BulletController bulletPrefab;
-    [SerializeField] GameManager gameManager;
-    [SerializeField] AudioManager audioManager;
-    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private BulletController bulletPrefab;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private AudioManager audioManager;
 
-
+    //input actions
     private InputAction move;
     private InputAction rotate;
     private InputAction fire;
     private InputAction restart;
     private InputAction quit;
 
+    [Header("--------------- Boolean Variables ----------------")]
+    [Tooltip("Indicates whether game has started")]
     public bool gameIsRunning;
+    [Tooltip("Whether play has pressed space for the first time to start the game")]
     public bool spaceWasPressed;
-
+    //whether player is using w/a or up/down arrow keys
     private bool playerIsMoving;
+    //whether player is using s/d or left/right arrow keys
     private bool playerIsRotating;
-    private Vector2 moveVector;
 
+    [Tooltip("")]
     [SerializeField] private Rigidbody2D ship;
     [SerializeField] private float rotSpeed;
     [SerializeField] private float moveSpeed;
@@ -50,7 +54,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-        playerAnimator = GetComponent<Animator>();
 
         gameIsRunning = false;
         spaceWasPressed = false;
@@ -90,7 +93,6 @@ public class PlayerController : MonoBehaviour
     {
         if (playerIsMoving)
         {
-
             ship.transform.position += transform.up * Time.deltaTime * moveSpeed * moveDirection;
         }
     }
